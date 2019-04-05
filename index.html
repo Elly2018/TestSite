@@ -19,9 +19,6 @@
        <script src="js/HomepageHelper.js"></script>
    </head>
    <body onload="RDonload();">
-        <script>
-            AOS.init();
-        </script>
         <!-- Toolbar on the top -->
         <nav class="navbar navbar-inverse rdtoolbar">
             <div class="container-fluid">
@@ -40,9 +37,8 @@
         <div class="title-image"></div>
 
         <div class="TitleText">
-            <h1 class="TitleText-Title noselect" >Result</h1>
-            <p class="TitleText-Info noselect">Bootstrap is the most popular HTML, CSS, and JS framework <br> for developing
-            responsive, mobile-first projects on the web.</p>
+            <h1 id="RDTitle" class="TitleText-Title noselect" ></h1>
+            <p id="RDDescription" class="TitleText-Info noselect"></p>
         </div>
 
         <!-- Title text -->

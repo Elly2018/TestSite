@@ -36,9 +36,11 @@ var pageName = "";
 // The script that response for the web page rendering
 function RDonload(){
     /* RD stand for result design */
+    
     RDVariableInitialize();
     RDCoverLoading();
     RDAnimationInitialize();
+    AOS.init();
 }
 
 /* Variable initialization, add item from this function */
@@ -53,7 +55,7 @@ function RDVariableInitialize(){
         new Artwork("../media/image/TitleImage.jpg", "人生勝利組"),
         new Artwork("../media/image/TitleImage.jpg", "一帆風順"),
         new Artwork("../media/image/TitleImage.jpg", "見璃的人生"),
-        new Artwork("../media/image/TitleImage.jpg", "測試元件")
+        new Artwork("../media/image/TitleImage.jpg", "測試元件"),
     ];
 
     /* Create profile array data */
@@ -62,7 +64,6 @@ function RDVariableInitialize(){
         new Profile("media/image/profile.png", "君昊", "史詩世紀中的傳說英雄"),
         new Profile("media/image/profile.png", "文杰", "上古時代的元素巨龍"),
         new Profile("media/image/profile.png", "昱安", "神"),
-        new Profile("media/image/profile.png", "阿宏", "我好寂寞喔 我好寂寞喔")
     ];
 
     /* Create patterm that use for index webpage animation */
@@ -75,6 +76,9 @@ function RDVariableInitialize(){
         new WorkRenderPatterm("4:8", "flip-right:flip-left"),
         new WorkRenderPatterm("12", "fade-up")
     ];
+
+    $("#RDTitle").text("Result");
+    $("#RDDescription").text("愛與正義");
 }
 
 //#region Loading cover part
@@ -145,7 +149,7 @@ function RDIndexCoverLoading(){
 
                 var frameImage = document.createElement("div");
                 $(frameImage).attr("class", "test-image aos-init aos-animate");
-                $(frameImage).attr("data-aos", ArtworkPatterm[k].animatePatterm[k]);
+                $(frameImage).attr("data-aos", ArtworkPatterm[i].animatePatterm[k]);
 
                 var Title = document.createElement("p");
                 $(Title).attr("class", "text-image-p noselect");
