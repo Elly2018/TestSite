@@ -65,8 +65,20 @@ body.html{
     margin: 40px;
     widows: 100%;
     height: 350px;
+}
 
+.profile-horizontal{
+    overflow-y: hidden;
+    margin: 40px;
+    widows: 100%;
+    height: 500px;
+}
 
+.profile-image{
+    height: 450px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
 }
 
 .test-image{
@@ -96,4 +108,8 @@ body.html{
           -ms-user-select: none; /* Internet Explorer/Edge */
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
-  }
+}
+
+.worktopgap{
+    height: 40px;
+}
