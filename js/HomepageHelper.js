@@ -58,21 +58,17 @@ function RDVariableInitialize(){
 
     /* Create artwork array data */
     ArtworkArray = [
-        new Artwork("../media/image/TitleImage.jpg", "遊戲人生"),
-        new Artwork("../media/image/TitleImage.jpg", "人生勝利組"),
-        new Artwork("../media/image/TitleImage.jpg", "一帆風順"),
-        new Artwork("../media/image/TitleImage.jpg", "見璃的人生"),
-        new Artwork("../media/image/TitleImage.jpg", "測試元件")
+        new Artwork("../media/image/TitleImage.jpg", "待更新")
     ];
 
     /* Create profile array data */
     ProfileArray = [
-        new Profile("media/image/profile.png", "奇昌", "遠古的神廟建造者"),
-        new Profile("media/image/profile.png", "君昊", "史詩世紀中的傳說英雄"),
-        new Profile("media/image/profile.png", "文杰", "上古時代的元素巨龍"),
-        new Profile("media/image/profile.png", "昱安", "毀滅世界的小丑"),
-        new Profile("media/image/profile.png", "宥宇", "待更新"),
-        new Profile("media/image/profile.png", "冠宇", "待更新"),
+        new Profile("media/image/profile.png", "奇昌", "平面網頁工程師"),
+        new Profile("media/image/profile.png", "君昊", "特效合成師"),
+        new Profile("media/image/profile.png", "文杰", "建模與材質設計師"),
+        new Profile("media/image/profile.png", "昱安", "後端工程與遊戲工程師"),
+        new Profile("media/image/profile.png", "宥宇", "建模師"),
+        new Profile("media/image/profile.png", "冠宇", "角色設計師"),
         new Profile("media/image/profile.png", "沅叡", "待更新")
     ];
 
@@ -96,8 +92,8 @@ function RDVariableInitialize(){
     AboutPageBackground = "#000000";
 
     $("#RDTitle").text("Result");
-    $("#RDDescription").html("愛與正義假面戰士<br >護衛著小朋友的未來");
-    $("#Introducing").find('p').html("Result Design是一群年輕的小夥子聚在一起的團隊 <br >我們學習領域有:網頁、建模、平面設計、特效以及合成.");
+    $("#RDDescription").html("我們結合了跨領域的人才 <br > 負責的項目從遊戲、 動畫, 到特效、後製合成製作");
+    $("#Introducing").find('p').html("Result Design 是因興趣而聚集起來創作的工作室.");
 }
 
 //#region Loading cover part
@@ -252,8 +248,8 @@ function RDGetProfilePage(IsImage, profileObj){
         var head1 = document.createElement("h1");
         var p1 = document.createElement("p");
 
-        head1.innerText = profileObj.PersonName;
-        p1.innerText = profileObj.PersonInformation;
+        head1.innerHTML = profileObj.PersonName;
+        p1.innerHTML = profileObj.PersonInformation;
 
         $(result).append(head1);
         $(result).append(p1);
