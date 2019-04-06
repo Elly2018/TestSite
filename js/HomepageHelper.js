@@ -31,12 +31,19 @@ var ArtworkArray = [];
 var ProfileArray = [];
 var ArtworkPatterm = [];
 
+/* Page title path */
+var IndexHomePageFilePath = "";
+var AboutPageFilePath = "";
+
+var IndexHomePageBackground;
+var AboutPageBackground;
+
 var pageName = "";
 
 // The script that response for the web page rendering
 function RDonload(){
+
     /* RD stand for result design */
-    
     RDVariableInitialize();
     RDCoverLoading();
     RDAnimationInitialize();
@@ -60,10 +67,10 @@ function RDVariableInitialize(){
 
     /* Create profile array data */
     ProfileArray = [
-        new Profile("media/image/profile.png", "見璃", "遠古的神廟管理者"),
+        new Profile("media/image/profile.png", "見璃", "遠古的神廟建造者"),
         new Profile("media/image/profile.png", "君昊", "史詩世紀中的傳說英雄"),
         new Profile("media/image/profile.png", "文杰", "上古時代的元素巨龍"),
-        new Profile("media/image/profile.png", "昱安", "神"),
+        new Profile("media/image/profile.png", "昱安", "毀滅世界的小丑"),
     ];
 
     /* Create patterm that use for index webpage animation */
@@ -77,6 +84,14 @@ function RDVariableInitialize(){
         new WorkRenderPatterm("12", "fade-up")
     ];
 
+    /* Specifie the top title image or video path and type */
+    IndexHomePageFilePath = "media/video/HomeTitle.mp4";
+    AboutPageFilePath = "media/image/TitleImage.jpg";
+
+    /* The title backgound color */
+    IndexHomePageBackground = "#000000";
+    AboutPageBackground = "#000000";
+
     $("#RDTitle").text("Result");
     $("#RDDescription").text("愛與正義");
 }
@@ -88,15 +103,21 @@ function RDCoverLoading(){
     switch(pageName){
         /* Homepage loading */
         case "index.html":
+            RenderTitleImageOrVideo(IndexHomePageFilePath, IndexHomePageBackground);
             RDIndexCoverLoading();
             break;
-
+        /* Homepage loading */
+        case "":
+            RenderTitleImageOrVideo(IndexHomePageFilePath, IndexHomePageBackground);
+            RDIndexCoverLoading();
+            break;
         /* Work loading */
         case "work.html":
             RDWorkCoverLoading();
             break;
         /* About loading */
         case "about.html":
+            RenderTitleImageOrVideo(AboutPageFilePath, AboutPageBackground);
             RDAboutProfileLoading();
             break;
     }
@@ -239,6 +260,56 @@ function RDGetProfilePage(IsImage, profileObj){
 //#endregion
 //#endregion
 
+//#region Useful render function
+function RenderTitleImageOrVideo(path, color){
+    var parent = $("#title-shower");
+
+    var filename = path.split('/').pop();
+    var extension = filename.split('.').pop();
+
+    /* Render image */
+    if(extension.toLowerCase() == "jpg" ||
+    extension.toLowerCase() == "png" ){
+        $(parent).css({
+            "background":"url('" + path + "')",
+            "height": "100vh",
+            "background-repeat": "no-repeat",
+            "background-position": "center",
+            "background-size": "cover",
+            "filter": "brightness(90%)"
+        });
+    }
+    /* Render video */
+    if(extension.toLowerCase() == "mp4"){
+
+        $(parent).replaceWith("<video id='title-shower' autoplay></video>");
+
+        parent = $("#title-shower");
+
+        $(parent).css({
+            "height": "100vh",
+            "background-color": color,
+            "background-repeat": "no-repeat",
+            "background-position": "center",
+            "background-size": "100vh",
+            "filter": "brightness(90%)"
+        });
+
+        var sourceElement = document.createElement("source");
+
+        $(parent).attr("width", "100%");
+        $(parent).attr("height", "100%");
+
+        $(sourceElement).attr("src", path);
+        $(sourceElement).attr("type", "video/" + extension.toLowerCase());
+
+        $(parent).append(sourceElement);
+
+        $(parent).attr("loop", "loop");
+    }
+}
+//#endregion
+
 /* Webitepage animation initialize, jquery animate */
 function RDAnimationInitialize(){
     var hiddenOpacity = 0.6;
@@ -250,6 +321,11 @@ function RDAnimationInitialize(){
     });
     $(".test-image").find('p').css({
         opacity: 0
+    });
+
+    $(".test-image").hover(function()
+    { 
+       $(this).toggleClass('classWithShadow');
     });
 
     $(".test-image").mouseenter(function( event ){
