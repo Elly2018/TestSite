@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
 /* Reset html element to none */
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption {
+html, body, div, span, applet, object, iframe, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption {
     margin: 0;
     padding: 0;
     border: 0;
@@ -25,7 +25,7 @@ body,html{
 .RDNavbar{
     width: 100%;
     height: 60px;
-    background-color: #333;
+    background-color: #343a40;
 }
 
 .RDNavbar div{
@@ -34,7 +34,7 @@ body,html{
     float: left;
     height: 40px;
     width: 150px;
-    margin: 12px 20px 0px 20px;
+    margin: 9px 20px 0px 20px;
     background-size: cover;
     background-position: center;
 }
@@ -42,7 +42,7 @@ body,html{
 .RDNavbar li{
     display: inline-block;
     padding: 20px 10px 15px 10px;
-    float: left;
+    float: right;
     list-style: none;
 }
 
@@ -60,30 +60,16 @@ body,html{
 
 
 
-
-
-
+/* For js spawner */
 #Introducing{
     height: 300px;
 }
 
-.TitleText{
-    position: absolute;   
-    color: azure;
-    left: 10%;
-    top: 25%;
+#showcase{
+    min-height: 90%;
 }
 
-.TitleText-Title{
-    font-size: 225px;
-}
-
-.TitleText-Info{
-    padding: 20px;
-    font-size: 18px;
-}
-
-.titleLogo{
+#titleLogo{
     position: absolute;
     background-image: url(../media/image/Logo.png);
     top: 50%;
@@ -94,31 +80,32 @@ body,html{
     height: 300px;
 }
 
-.CenterText{
-    text-align: center;
-    vertical-align: middle;
-    transform: translate(0%, 150px);
+
+
+
+
+/* For title text */
+.TitleText{
+    position: absolute;   
+    color: azure;
+    left: 10%;
+    top: 25%;
 }
 
-.footer{
-    background-color:#343a40 !important; 
-    width: 100%;
-    height: 100;
+.TitleText h1{
+    font-size: 225px;
 }
 
-.title-image{
-    background: url('../media/image/TitleImage.jpg');
-    height: 100vh;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    filter: brightness(90%); 
+.TitleText p{
+    padding: 20px;
+    font-size: 18px;
 }
 
-.rd-center{
-    margin: 0 auto;
-}
 
+
+
+
+/* For artwork size */
 .showcase-horizontal{
     overflow-y: hidden;
     margin: 40px;
@@ -126,6 +113,22 @@ body,html{
     height: 350px;
 }
 
+.text-image-p{
+    text-align: center;
+    vertical-align: middle;
+    transform: translate(0%, 150px);
+    color: aliceblue;
+    font-weight: 800;
+    font-size: 35px;
+    margin: 10px 50px 10px 50px;
+    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+
+
+
+
+/* Profile part */
 .profile-horizontal{
     overflow-y: hidden;
     margin: 40px;
@@ -148,25 +151,33 @@ body,html{
     font-size: 18px;
 }
 
-.test-image{
-    background: url('../media/image/Testing.jpg');
-    height: 450px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 150%;
+#aboutIntro{
+    padding: 5% 15%;
 }
 
-.text-image-p{
+
+
+/* footer */
+.footer{
+    background-color:#343a40 !important; 
+
+    width: 100%;
+    height: 300px;
+}
+
+
+
+
+
+/* Useful class */
+/* Center the text, simple */
+.CenterText{
     text-align: center;
     vertical-align: middle;
     transform: translate(0%, 150px);
-    color: aliceblue;
-    font-weight: 800;
-    font-size: 35px;
-    margin: 10px 50px 10px 50px;
-    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.8);
 }
 
+/* Disable text select, simple */
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
@@ -177,12 +188,14 @@ body,html{
                                     supported by Chrome and Opera */
 }
 
+/* This will link to jquery animation */
 .classWithShadow{
     -moz-box-shadow: 3px 3px 4px #000; 
     -webkit-box-shadow: 3px 3px 4px #000; 
     box-shadow: 3px 3px 10px #000; 
- }
+}
 
+/* For work page top gap */
 .worktopgap{
     height: 40px;
 }

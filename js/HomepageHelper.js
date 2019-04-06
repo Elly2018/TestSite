@@ -29,7 +29,8 @@ class WorkRenderPatterm{
 /* For data store */
 var ArtworkArray = [];
 var ProfileArray = [];
-var ArtworkPatterm = [];
+var IndexArtworkPatterm = [];
+var WorkArtworkPatterm = [];
 
 /* Page title path */
 var IndexHomePageFilePath = "";
@@ -58,7 +59,7 @@ function RDVariableInitialize(){
 
     /* Create artwork array data */
     ArtworkArray = [
-        new Artwork("../media/image/TitleImage.jpg", "待更新")
+        new Artwork("media/image/Testing.jpg", "待更新"),
     ];
 
     /* Create profile array data */
@@ -73,7 +74,7 @@ function RDVariableInitialize(){
     ];
 
     /* Create patterm that use for index webpage animation */
-    ArtworkPatterm = [
+    IndexArtworkPatterm = [
         new WorkRenderPatterm("4:8", "flip-right:flip-left"),
         new WorkRenderPatterm("8:4", "flip-left:flip-right"),
         new WorkRenderPatterm("4:4:4", "fade-up:fade-up:fade-up"),
@@ -81,6 +82,20 @@ function RDVariableInitialize(){
         new WorkRenderPatterm("8:4", "flip-left:flip-right"),
         new WorkRenderPatterm("4:8", "flip-right:flip-left"),
         new WorkRenderPatterm("12", "fade-up")
+    ];
+
+    /* Create patterm that use for work webpage animation */
+    WorkArtworkPatterm = [
+        new WorkRenderPatterm("4:8", "flip-right:flip-left"),
+        new WorkRenderPatterm("8:4", "flip-left:flip-right"),
+        new WorkRenderPatterm("4:4:4", "fade-up:fade-up:fade-up"),
+        new WorkRenderPatterm("4:8", "flip-right:flip-left"),
+        new WorkRenderPatterm("8:4", "flip-left:flip-right"),
+        new WorkRenderPatterm("4:8", "flip-right:flip-left"),
+        new WorkRenderPatterm("12", "fade-up"),
+        new WorkRenderPatterm("4:8", "flip-right:flip-left"),
+        new WorkRenderPatterm("8:4", "flip-left:flip-right"),
+        new WorkRenderPatterm("4:4:4", "fade-up:fade-up:fade-up")
     ];
 
     /* Specifie the top title image or video path and type */
@@ -103,11 +118,13 @@ function RDCoverLoading(){
     switch(pageName){
         /* Homepage loading */
         case "index.html":
+            SetCookie(0);
             RenderTitleImageOrVideo(IndexHomePageFilePath, IndexHomePageBackground);
             RDIndexCoverLoading();
             break;
         /* Homepage loading */
         case "":
+            SetCookie(0);
             RenderTitleImageOrVideo(IndexHomePageFilePath, IndexHomePageBackground);
             RDIndexCoverLoading();
             break;
@@ -117,6 +134,7 @@ function RDCoverLoading(){
             break;
         /* About loading */
         case "about.html":
+            SetCookie(0);
             RenderTitleImageOrVideo(AboutPageFilePath, AboutPageBackground);
             RDAboutProfileLoading();
             break;
@@ -132,14 +150,14 @@ function RDIndexCoverLoading(){
     var Cursor = 0;
 
     /* Loop all patterm register */
-    for(var i = 0; i < ArtworkPatterm.length; i++){
+    for(var i = 0; i < IndexArtworkPatterm.length; i++){
         /* Row buffer and sending artwork information array buffer */
         var ARow;
         var CanBeAdd = false;
         var ASendingBuffer = [];
 
         /* Loop the patterm */
-        for(var j = 0; j < ArtworkPatterm[i].patterm.length; j++){
+        for(var j = 0; j < IndexArtworkPatterm[i].patterm.length; j++){
             /* If current cursor + j is in register artwork range */
             /* Then add the stuff into the sending artwork information array buffer */
             if(Cursor + j < ArtworkArray.length){
@@ -153,47 +171,55 @@ function RDIndexCoverLoading(){
         /* For debug */
         console.log(Cursor + " " + CanBeAdd + " " + ASendingBuffer.length);
 
-        /* Get the element from render function */
-        ARow = function(){
-            
-            /* A row return element, this will place under the root */
-            var result = document.createElement("div");
-            $(result).attr("class", "showcase-horizontal row justify-content-center");
-
-            /* Loop the patterm */
-            /* Because index only show limit image, so we loop the patterm object */
-            for(var k = 0; k < ArtworkPatterm[i].patterm.length; k++){
-
-                /* Make the frame object, the grid system depend on patterm variable */
-                var frame = document.createElement("div");
-                $(frame).attr("class", "col-sm-" + ArtworkPatterm[i].patterm[k]  + " frame");
-
-                var frameImage = document.createElement("div");
-                $(frameImage).attr("class", "test-image aos-init aos-animate");
-                $(frameImage).attr("data-aos", ArtworkPatterm[i].animatePatterm[k]);
-
-                var Title = document.createElement("p");
-                $(Title).attr("class", "text-image-p noselect");
-
-                /* If render is finished, return */
-                if(k < ASendingBuffer.length){
-                    $(Title).text(ASendingBuffer[k].Title);
-
-                    $(frameImage).append(Title);
-
-                    $(frame).append(frameImage);
-
-                    $(result).append(frame);
-                }
-            }
-
-            return result;
-        };
-
         if(CanBeAdd){
+            /* Get the element from render function */
+            ARow = function(){
+                        
+                /* A row return element, this will place under the root */
+                var result = document.createElement("div");
+                $(result).attr("class", "showcase-horizontal row justify-content-center");
+
+                /* Loop the patterm */
+                /* Because index only show limit image, so we loop the patterm object */
+                for(var k = 0; k < IndexArtworkPatterm[i].patterm.length; k++){
+
+                    /* Make the frame object, the grid system depend on patterm variable */
+                    var frame = document.createElement("div");
+                    $(frame).attr("class", "col-sm-" + IndexArtworkPatterm[i].patterm[k]  + " frame");
+
+                    var frameImage = document.createElement("div");
+                    $(frameImage).attr("class", "test-image aos-init aos-animate");
+                    $(frameImage).attr("data-aos", IndexArtworkPatterm[i].animatePatterm[k]);
+
+                    var Title = document.createElement("p");
+                    $(Title).attr("class", "text-image-p noselect");
+
+                    /* If render is finished, return */
+                    if(k < ASendingBuffer.length){
+                        $(frameImage).css({
+                            'background':'url(' + ASendingBuffer[k].CoverFileName + ')',
+                            'height': '450px',
+                            'background-repeat': 'no-repeat',
+                            'background-position': 'center',
+                            'background-size': '150%'
+                        });
+
+                        $(Title).text(ASendingBuffer[k].Title);
+
+                        $(frameImage).append(Title);
+
+                        $(frame).append(frameImage);
+
+                        $(result).append(frame);
+                    }
+                }
+
+                return result;
+            };
+
             $(parent).append(ARow);
         }
-        Cursor = Cursor + ArtworkPatterm[i].patterm.length;
+        Cursor = Cursor + IndexArtworkPatterm[i].patterm.length;
     }
 }
 //#endregion
@@ -201,9 +227,97 @@ function RDIndexCoverLoading(){
 /* Work page loading */
 function RDWorkCoverLoading(){
     var parent = $("#showcase");
-    for(var i = 0; i < ArtworkArray.length; i++){
+    var indexPage = Cookies.get("Page");
 
+    var Cursor = 0;
+
+    /* Get total render artwork size */
+    var totalPattermSize = 0;
+    for(var i = 0; i < WorkArtworkPatterm.length; i++){
+        totalPattermSize += WorkArtworkPatterm[i].patterm.length;
     }
+    console.log("The total size of patterm: " + totalPattermSize);
+
+    /* The top place space, we need to add this space before render processes */
+    $(parent).append("<div class='worktopgap'></div>");
+
+    /* Loop all the patterm */
+    for(var i = 0; i < WorkArtworkPatterm.length; i++){
+        /* Row buffer and sending artwork information array buffer */
+        var ARow;
+        var CanBeAdd = false;
+        var ASendingBuffer = [];
+
+        /* Loop single patterm element */
+        for(var j = 0; j < WorkArtworkPatterm[i].patterm.length; j++){
+            /* If current cursor + j is in register artwork range */
+            /* Then add the stuff into the sending artwork information array buffer */
+            if(Cursor + j + (indexPage * totalPattermSize) < ArtworkArray.length){
+                /* Flip the trigger */
+                /* Because we have at least one image to show */
+                CanBeAdd = true;
+                ASendingBuffer.push(ArtworkArray[Cursor + j + (indexPage * totalPattermSize)]);
+            }
+        }
+
+        /* For debug */
+        console.log(Cursor + " " + CanBeAdd + " " + ASendingBuffer.length);
+
+        if(CanBeAdd){
+            /* Get the element from render function */
+            ARow = function(){
+                        
+                /* A row return element, this will place under the root */
+                var result = document.createElement("div");
+                $(result).attr("class", "showcase-horizontal row justify-content-center");
+
+                /* Loop the patterm */
+                /* Because index only show limit image, so we loop the patterm object */
+                for(var k = 0; k < WorkArtworkPatterm[i].patterm.length; k++){
+
+                    /* Make the frame object, the grid system depend on patterm variable */
+                    var frame = document.createElement("div");
+                    $(frame).attr("class", "col-sm-" + WorkArtworkPatterm[i].patterm[k]  + " frame");
+
+                    var frameImage = document.createElement("div");
+                    $(frameImage).attr("class", "test-image aos-init aos-animate");
+                    $(frameImage).attr("data-aos", WorkArtworkPatterm[i].animatePatterm[k]);
+
+                    var Title = document.createElement("p");
+                    $(Title).attr("class", "text-image-p noselect");
+
+                    /* If render is finished, return */
+                    if(k < ASendingBuffer.length){
+                        $(frameImage).css({
+                            'background':'url(' + ASendingBuffer[k].CoverFileName + ')',
+                            'height': '450px',
+                            'background-repeat': 'no-repeat',
+                            'background-position': 'center',
+                            'background-size': '150%'
+                        });
+
+                        $(Title).text(ASendingBuffer[k].Title);
+
+                        $(frameImage).append(Title);
+
+                        $(frame).append(frameImage);
+
+                        $(result).append(frame);
+                    }
+                }
+
+                return result;
+            };
+
+            $(parent).append(ARow);
+
+            Cursor = Cursor + WorkArtworkPatterm[i].patterm.length;
+        }
+    }
+}
+
+function SetCookie(index){
+    Cookies.set("Page", index);
 }
 
 /* About page loading */
