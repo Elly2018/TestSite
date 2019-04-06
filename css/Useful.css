@@ -1,14 +1,69 @@
-.rdtoolbar{
-    position: fixed;
-    z-index: 10;
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+/* Reset html element to none */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+/* Our default variables */
+body,html{
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
     width: 100%;
+    height: 100vh;
 }
 
-.rdRightToolBar{
-    float: right;
+/* Toolbar part */
+.RDNavbar{
+    width: 100%;
+    height: 60px;
+    background-color: #333;
 }
 
-.Introducing{
+.RDNavbar div{
+    background-image: url(../media/image/ToolbarLogo.png);
+    display: inline-block;
+    float: left;
+    height: 40px;
+    width: 150px;
+    margin: 12px 20px 0px 20px;
+    background-size: cover;
+    background-position: center;
+}
+
+.RDNavbar li{
+    display: inline-block;
+    padding: 20px 10px 15px 10px;
+    float: left;
+    list-style: none;
+}
+
+.RDNavbar a{
+    text-decoration: none;
+    color: #fff;
+    margin: 25px 20px;
+}
+
+.RDNavbar a:hover{
+    color: #aaa;
+}
+
+
+
+
+
+
+
+
+#Introducing{
     height: 300px;
 }
 
@@ -51,13 +106,6 @@
     height: 100;
 }
 
-body.html{
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100vh;
-}
-
 .title-image{
     background: url('../media/image/TitleImage.jpg');
     height: 100vh;
@@ -90,6 +138,14 @@ body.html{
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
+}
+
+.profile h1{
+    font-size: 36px;
+}
+
+.profile p{
+    font-size: 18px;
 }
 
 .test-image{

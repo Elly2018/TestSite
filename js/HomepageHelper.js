@@ -62,15 +62,18 @@ function RDVariableInitialize(){
         new Artwork("../media/image/TitleImage.jpg", "人生勝利組"),
         new Artwork("../media/image/TitleImage.jpg", "一帆風順"),
         new Artwork("../media/image/TitleImage.jpg", "見璃的人生"),
-        new Artwork("../media/image/TitleImage.jpg", "測試元件"),
+        new Artwork("../media/image/TitleImage.jpg", "測試元件")
     ];
 
     /* Create profile array data */
     ProfileArray = [
-        new Profile("media/image/profile.png", "見璃", "遠古的神廟建造者"),
+        new Profile("media/image/profile.png", "奇昌", "遠古的神廟建造者"),
         new Profile("media/image/profile.png", "君昊", "史詩世紀中的傳說英雄"),
         new Profile("media/image/profile.png", "文杰", "上古時代的元素巨龍"),
         new Profile("media/image/profile.png", "昱安", "毀滅世界的小丑"),
+        new Profile("media/image/profile.png", "宥宇", "待更新"),
+        new Profile("media/image/profile.png", "冠宇", "待更新"),
+        new Profile("media/image/profile.png", "沅叡", "待更新")
     ];
 
     /* Create patterm that use for index webpage animation */
@@ -93,7 +96,8 @@ function RDVariableInitialize(){
     AboutPageBackground = "#000000";
 
     $("#RDTitle").text("Result");
-    $("#RDDescription").text("愛與正義");
+    $("#RDDescription").html("愛與正義假面戰士<br >護衛著小朋友的未來");
+    $("#Introducing").find('p').html("Result Design是一群年輕的小夥子聚在一起的團隊 <br >我們學習領域有:網頁、建模、平面設計、特效以及合成.");
 }
 
 //#region Loading cover part
@@ -244,7 +248,7 @@ function RDGetProfilePage(IsImage, profileObj){
         $(result).append(imagecontent);
         return result;
     }else{
-        $(result).attr("class", "col-sm-6 noselect CenterText");
+        $(result).attr("class", "col-sm-6 noselect CenterText profile");
         var head1 = document.createElement("h1");
         var p1 = document.createElement("p");
 
