@@ -25,12 +25,22 @@ class WorkRenderPatterm{
     }
 }
 
+/* The about bottom carousel data set */
+class AboutCarousel{
+    constructor(CoverFileName, Title, Description){
+        this.CoverFileName = CoverFileName;
+        this.Title = Title;
+        this.Description = Description;
+    }
+}
+
 /* Initialize global variable */
 /* For data store */
 var ArtworkArray = [];
 var ProfileArray = [];
 var IndexArtworkPatterm = [];
 var WorkArtworkPatterm = [];
+var MyAboutCarousel = [];
 
 /* Page title path */
 var IndexHomePageFilePath = "";
@@ -98,6 +108,13 @@ function RDVariableInitialize(){
         new WorkRenderPatterm("4:4:4", "fade-up:fade-up:fade-up")
     ];
 
+    /* Create carousel data set for about */
+    MyAboutCarousel = [
+        new AboutCarousel("media/image/TitleImage.jpg", "Test1", "Test Text"),
+        new AboutCarousel("media/image/TitleImage.jpg", "Test2", "Test Text"),
+        new AboutCarousel("media/image/TitleImage.jpg", "Test3", "Test Text")
+    ];
+
     /* Specifie the top title image or video path and type */
     IndexHomePageFilePath = "media/video/HomeTitle.mp4";
     AboutPageFilePath = "media/image/TitleImage.jpg";
@@ -137,12 +154,12 @@ function RDCoverLoading(){
             SetCookie(0);
             RenderTitleImageOrVideo(AboutPageFilePath, AboutPageBackground);
             RDAboutProfileLoading();
+            RDMyAboutCarouselLoading();
             break;
     }
 }
 
 /* Index page loading */
-//#region Index
 function RDIndexCoverLoading(){
     var parent = $("#showcase");
 
@@ -222,7 +239,6 @@ function RDIndexCoverLoading(){
         Cursor = Cursor + IndexArtworkPatterm[i].patterm.length;
     }
 }
-//#endregion
 
 /* Work page loading */
 function RDWorkCoverLoading(){
@@ -232,11 +248,7 @@ function RDWorkCoverLoading(){
     var Cursor = 0;
 
     /* Get total render artwork size */
-    var totalPattermSize = 0;
-    for(var i = 0; i < WorkArtworkPatterm.length; i++){
-        totalPattermSize += WorkArtworkPatterm[i].patterm.length;
-    }
-    console.log("The total size of patterm: " + totalPattermSize);
+    var totalPattermSize = RDGetWorkingPattermSize();
 
     /* The top place space, we need to add this space before render processes */
     $(parent).append("<div class='worktopgap'></div>");
@@ -316,12 +328,19 @@ function RDWorkCoverLoading(){
     }
 }
 
+function RDGetWorkingPattermSize(){
+    var totalPattermSize = 0;
+    for(var i = 0; i < WorkArtworkPatterm.length; i++){
+        totalPattermSize += WorkArtworkPatterm[i].patterm.length;
+    }
+    return totalPattermSize;
+}
+
 function SetCookie(index){
     Cookies.set("Page", index);
 }
 
 /* About page loading */
-//#region About
 function RDAboutProfileLoading(){
     var parent = $("#about-spawner");
     for(var i = 0; i < ProfileArray.length; i++){
@@ -342,6 +361,60 @@ function RDAboutProfileLoading(){
 
         /* Append to parent root page */
         $(parent).append(outterDiv);
+    }
+}
+
+/* About carousel loading */
+function RDMyAboutCarouselLoading(){
+    /* Link render */
+    for(var i = 0; i < MyAboutCarousel.length; i++){
+        /* Create a new list */
+        var item = document.createElement("li");
+
+        /* Set the attributes */
+        $(item).attr("data-target", "#myCarousel");
+        $(item).attr("data-slide-to", String(i));
+
+        /* Set the first one to active */
+        if(i == 0){
+            $(item).attr("class", "active");
+        }
+
+        /* Append to root table */
+        $(".carousel-indicators").append(item);
+    }
+
+    for(var i = 0; i < MyAboutCarousel.length; i++){
+
+        var outterContainer = document.createElement("div");
+
+        if(i == 0){
+            $(outterContainer).attr("class", "item active");
+        }else{
+            $(outterContainer).attr("class", "item");
+        }
+        
+        var cover = document.createElement("img");
+        $(cover).attr("src", MyAboutCarousel[i].CoverFileName);
+        $(cover).attr("alt", MyAboutCarousel[i].Title);
+        $(cover).attr("style", "width:100%");
+
+        var content = document.createElement("div");
+        $(content).attr("class", "carousel-caption");
+
+        var header = document.createElement("h2");
+        $(header).html(MyAboutCarousel[i].Title);
+
+        var info = document.createElement("p");
+        $(info).html(MyAboutCarousel[i].Description);
+
+        $(content).append(header);
+        $(content).append(info);
+
+        $(outterContainer).append(cover);
+        $(outterContainer).append(content);
+
+        $(".carousel-inner").append(outterContainer);
     }
 }
 
@@ -371,7 +444,6 @@ function RDGetProfilePage(IsImage, profileObj){
         return result;
     }
 }
-//#endregion
 //#endregion
 
 //#region Useful render function
@@ -424,6 +496,7 @@ function RenderTitleImageOrVideo(path, color){
 }
 //#endregion
 
+//#region Animation setup
 /* Webitepage animation initialize, jquery animate */
 function RDAnimationInitialize(){
     var hiddenOpacity = 0.6;
@@ -496,3 +569,4 @@ function RDAnimationInitialize(){
         });
     });
 }
+//#endregion
