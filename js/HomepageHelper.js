@@ -1,9 +1,13 @@
 /* Artwork object specific */
 /* Object will represend artwork */
 class Artwork{
-    constructor(CoverFileName, Title){
+    constructor(CoverFileName, Title, ContentTitle, Description, FileLink, Tags){
         this.CoverFileName = CoverFileName;
         this.Title = Title;
+        this.ContentTitle = ContentTitle;
+        this.Description = Description
+        this.FileLink = FileLink;
+        this.Tags = Tags;
     }
 }
 
@@ -58,6 +62,7 @@ function RDonload(){
     RDVariableInitialize();
     RDCoverLoading();
     RDAnimationInitialize();
+    RDArtworkOnClickInitialize();
     AOS.init();
 }
 
@@ -69,35 +74,10 @@ function RDVariableInitialize(){
 
     /* Create artwork array data */
     ArtworkArray = [
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
-        new Artwork("media/image/Testing.jpg", "待更新"),
+        new Artwork("media/image/Testing.jpg", "待更新", 
+        "標題", "內容", "https://www.youtube.com/embed/pJ_m5lDftYc", "HOMEPAGE:VFX"),
+        new Artwork("media/image/Testing.jpg", "待更新", 
+        "標題", "內容", "https://www.youtube.com/embed/pJ_m5lDftYc", "VFX"),
     ];
 
     /* Create profile array data */
@@ -194,6 +174,12 @@ function RDIndexCoverLoading(){
     /* The current cursor for array indexing */
     var Cursor = 0;
 
+    var HomePagePageSize = GetTotalArrayPattermSize(IndexArtworkPatterm);
+
+    var RenderList = GetArtworkPageByTagsList("HOMEPAGE", HomePagePageSize, 0)
+
+    console.log(RenderList);
+
     /* Loop all patterm register */
     for(var i = 0; i < IndexArtworkPatterm.length; i++){
         /* Row buffer and sending artwork information array buffer */
@@ -205,11 +191,11 @@ function RDIndexCoverLoading(){
         for(var j = 0; j < IndexArtworkPatterm[i].patterm.length; j++){
             /* If current cursor + j is in register artwork range */
             /* Then add the stuff into the sending artwork information array buffer */
-            if(Cursor + j < ArtworkArray.length){
+            if(Cursor + j < RenderList.length){
                 /* Flip the trigger */
                 /* Because we have at least one image to show */
                 CanBeAdd = true;
-                ASendingBuffer.push(ArtworkArray[Cursor + j]);
+                ASendingBuffer.push(RenderList[Cursor + j]);
             }
         }
 
@@ -276,7 +262,7 @@ function RDWorkCoverLoading(){
     var Cursor = 0;
 
     /* Get total render artwork size */
-    var totalPattermSize = RDGetWorkingPattermSize();
+    var totalPattermSize = GetTotalArrayPattermSize(WorkArtworkPatterm);
 
     /* The top place space, we need to add this space before render processes */
     $(parent).append("<div class='worktopgap'></div>");
@@ -354,18 +340,6 @@ function RDWorkCoverLoading(){
             Cursor = Cursor + WorkArtworkPatterm[i].patterm.length;
         }
     }
-}
-
-function RDGetWorkingPattermSize(){
-    var totalPattermSize = 0;
-    for(var i = 0; i < WorkArtworkPatterm.length; i++){
-        totalPattermSize += WorkArtworkPatterm[i].patterm.length;
-    }
-    return totalPattermSize;
-}
-
-function SetCookie(index){
-    Cookies.set("Page", index);
 }
 
 /* About page loading */
@@ -522,6 +496,77 @@ function RenderTitleImageOrVideo(path, color){
         $(parent).attr("loop", "loop");
     }
 }
+
+/* Get artwork array by tag and array limit and index of the page */
+function GetArtworkPageByTagsList(tag, arraylimit, Indexpage){
+    var result = [];
+    var TotalList = GetArtworksByTagsList(tag);
+
+    for(var i = 0; i < arraylimit; i++){
+        if(TotalList.length > arraylimit * Indexpage + i){
+            result.push(TotalList[arraylimit * Indexpage + i]);
+        }
+    }
+
+    /* Return query result */
+    return result;
+}
+
+/* Get artwork array by simply tag, return artworks that have tag in it */
+function GetArtworksByTagsList(tag){
+    var result = [];
+    var tagArray = tag.split(':');
+
+    /* Loop all the artwork */
+    for(var i = 0; i < ArtworkArray.length; i++){
+        /* Initialize trigger */
+        var CanBeAdd = false;
+
+        /* Loop all tag request */
+        for(var j = 0; j < tagArray.length; j++){
+
+            /* Get current selection artwork tags */
+            var selectionTags = ArtworkArray[i].Tags.split(':');
+
+            /* Loop the current selection artwork tags*/
+            for(var k = 0; k < selectionTags.length; k++){
+
+                /* Before the trigger flip, do the check */
+                if(!CanBeAdd){
+
+                    /* Check if the any tag match */
+                    if(tagArray[j] == selectionTags[k]){
+                        CanBeAdd = true;
+                        result.push(ArtworkArray[i]);
+                    }
+                }
+            }
+        }
+    }
+
+    /* Return query result */
+    return result;
+}
+
+function SetCookie(index){
+    Cookies.set("Page", index);
+}
+
+function GetTotalArrayPattermSize(targetArray){
+    var totalPattermSize = 0;
+    for(var i = 0; i < targetArray.length; i++){
+        totalPattermSize += targetArray[i].patterm.length;
+    }
+    return totalPattermSize;
+}
+
+function GetArtworkByTitleAndCover(t, tc){
+    for(var i = 0; i < ArtworkArray.length; i++){
+        if(ArtworkArray[i].Title == t, ArtworkArray[i].CoverFileName){
+            return ArtworkArray[i];
+        }
+    }
+}
 //#endregion
 
 //#region Animation setup
@@ -595,6 +640,27 @@ function RDAnimationInitialize(){
             });
             //$( event.target ).stop(false, true)
         });
+    });
+}
+
+function RDArtworkOnClickInitialize(){
+    var modal = document.getElementById('myModal');
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+          $("#Shower").find("iframe").attr("src", "");
+        }
+      }
+
+    $(".test-image").click(function(event){
+        $("#myModal").css({'display':'block'});
+        var ArtworkSelection = GetArtworkByTitleAndCover($(event).attr("ArtworkTitle"), $(event).attr("ArtworkPath"));
+        if(ArtworkSelection != null){
+            $("#Content").find("h1").html(ArtworkSelection.ContentTitle);
+            $("#Content").find("p").html(ArtworkSelection.Description);
+            $("#Shower").find("iframe").attr("src", ArtworkSelection.FileLink);
+        }
     });
 }
 //#endregion
