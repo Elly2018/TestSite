@@ -133,7 +133,7 @@ function RDVariableInitialize(){
 
     $("#RDTitle").text("Result");
     $("#RDDescription").html("我們結合了跨領域的人才 <br > 負責的項目從遊戲、 動畫, 到特效、後製合成製作");
-    $("#Introducing").find('p').html("Result Design 是因興趣而聚集起來創作的工作室.");
+    $("#Introducing").find('h4').html("Result Design 是因興趣而聚集起來創作的工作室.");
 }
 
 //#region Loading cover part
@@ -396,13 +396,19 @@ function RDMyAboutCarouselLoading(){
             $(outterContainer).attr("class", "item");
         }
         
-        var cover = document.createElement("img");
-        $(cover).attr("src", MyAboutCarousel[i].CoverFileName);
-        $(cover).attr("alt", MyAboutCarousel[i].Title);
-        $(cover).attr("style", "width:100%");
+        var cover = document.createElement("div");
+        //$(cover).attr("src", );
+        //$(cover).attr("alt", MyAboutCarousel[i].Title);
+        $(cover).css({
+            "background-image":"url("+ MyAboutCarousel[i].CoverFileName +")",
+            "width":"100%",
+            "height":"100%",
+            "background-repeat":"no-repeat",
+            "background-position":"center",
+            "background-size":"100%"});
 
         var content = document.createElement("div");
-        $(content).attr("class", "carousel-caption");
+        $(content).attr("class", "carousel-caption carousel-custom-caption");
 
         var header = document.createElement("h2");
         $(header).html(MyAboutCarousel[i].Title);
@@ -464,7 +470,8 @@ function RenderTitleImageOrVideo(path, color){
             "background-repeat": "no-repeat",
             "background-position": "center",
             "background-size": "cover",
-            "filter": "brightness(90%)"
+            "filter": "brightness(90%)",
+            "background-attachment": "fixed"
         });
     }
     /* Render video */
@@ -479,8 +486,9 @@ function RenderTitleImageOrVideo(path, color){
             "background-color": color,
             "background-repeat": "no-repeat",
             "background-position": "center",
-            "background-size": "100vh",
-            "filter": "brightness(90%)"
+            "background-size": "cover",
+            "filter": "brightness(90%)",
+            "background-attachment": "fixed"
         });
 
         var sourceElement = document.createElement("source");
